@@ -175,10 +175,10 @@ p{
 /* Hover Effects */
 .bttns{
     user-select: none;
-    border-bottom:black solid 0.4vmin;
     width:100%;
     transition: all 0.2s;
     cursor: pointer;
+    font-size: 2rem
 }
 
 
@@ -198,6 +198,10 @@ p{
     justify-content: flex-start;
     align-items: center;
     gap: 1vmin;
+}
+
+.button-content{
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; align-items: center; gap: 10px;
 }
 
 /* For Extra Small Mobile Screens (Landscape) */
@@ -246,6 +250,20 @@ p{
     }
 
     #fix {
-        height: 30vmin;
+        height: auto;
+        padding: 2vmin;
+    }
+    .button-content {
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .bttns {
+        border-bottom: 0.2vmin solid;
+        word-wrap: break-word;
+        white-space: normal;
+        overflow-wrap: break-word;
     }
 }
