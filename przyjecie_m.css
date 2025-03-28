@@ -1,0 +1,251 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #d9e9f3;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Banner */
+.banner{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    border: solid #0847a7 0.4vmin;
+    border-bottom: solid #0847a7 1vmin;
+    background-color: #4a90e2;
+    border-bottom-right-radius: 40px;
+    border-bottom-left-radius: 40px;
+    font-size: 4.5vmin;
+    color: #ffffff;
+    height: 9vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    user-select: none;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Divider */
+.divider {
+    height: 3vmin;
+    background: rgb(0, 0, 0);
+    border: solid black 0.1vmin;
+    width:80vw;
+    border-radius: 1vmin;
+    cursor: pointer; 
+    position: absolute;
+    top: 13vmin;
+    left:50%;
+    transform: translateX(-50%);
+    color: white;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    user-select: none;
+}
+
+/* Mid Section */
+.midup, .mid {
+    position: absolute;
+    top: 16vmin;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100% - 40vmin);
+    overflow: hidden;
+    font-size: 2.5vmin;
+    overflow-y: auto;
+    color: #333;
+    scroll-behavior: smooth;
+}
+
+.mid div {
+    margin: 0.5vmin 0;
+}
+
+/* Footer */
+.positioner{
+    border-top: solid #000000 0.2vmin;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #d9e9f3;
+    padding-top: 2vmin;
+    height:20vmin;
+}
+
+.footer{
+    width: 100%;
+    height: auto;
+    border-top: solid #0847a7 0.6vmin;
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+    background-color: #4a90e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1vmin;
+    height: 10vmin;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Buttons */
+.button2 {
+    padding: 12px 20px;
+    margin: 10px;
+    background-color: #4a90e2;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 2.5vmin;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button2:hover {
+    background-color: #3c7ec3;
+    transform: translateY(-2px);
+}
+
+input::placeholder{
+    text-align: center;
+    color: #999;
+    user-select: none;
+}
+
+input{
+    border: 3px solid #ccc;
+    color: #ccc;
+    height: 6vmin;
+    outline: none;
+    margin-bottom: 2vmin; 
+    width: 22vw;
+    text-align: center;
+    font-size: 2.5vmin;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus{
+    border-color: #4a90e2;
+    color: #4a90e2;
+}
+
+input:focus::placeholder {
+    color: #4a90e2;
+}
+
+select{
+    border: 3px solid #ccc;
+    color: #ccc;
+    background-color: white;
+    height: 6vmin;
+    outline: none;
+    margin-bottom: 2vmin; 
+    width: 22vw;
+    text-align: center;
+    font-size: 2.5vmin;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+select:focus{
+    border-color: #4a90e2;
+    color: #4a90e2;
+}
+
+p{
+    margin-left: 6vmin;
+    margin-right: 6vmin;
+    margin-bottom:0.5vmin;
+    margin-top:1vmin;
+}
+
+/* Hover Effects */
+.bttns{
+    user-select: none;
+    border-bottom:black solid 0.4vmin;
+    width:100%;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+
+/* Modal */
+#fix, #fix2, #fix3 {
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 0.2vmin black solid;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 2vw;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1vmin;
+}
+
+/* For Extra Small Mobile Screens (Landscape) */
+@media screen and (max-width: 768px) {
+    .banner {
+        font-size: 7vmin;
+        height: 16vmin;
+    }
+
+    .divider {
+        height: 6vmin;
+        width: 95vw;
+        top: 16vmin;
+    }
+
+    .mid, .midup {
+        font-size: 4.2vmin;
+        top: 22vmin;
+        max-height: calc(100% - 100vmin);
+        padding: 4vmin;
+    }
+
+    input, select {
+        width: 90vw;
+        font-size: 4vmin;
+        height: 10vmin;
+    }
+
+    .button2 {
+        font-size: 4vmin;
+        margin:6px;
+    }
+
+    .positioner {
+        height: auto;
+        padding-top: 5vmin;
+    }
+
+    .footer {
+        height: auto;
+        font-size: 5vmin;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction:column
+    }
+
+    #fix {
+        height: 30vmin;
+    }
+}

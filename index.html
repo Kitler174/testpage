@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="przyjecie_m.css">
+    <link rel="icon" href="icon.png">
+
+    <title>Workplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            transition: transform 0.2s ease;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+    </style>
+</head>
+<body>
+    <form action="{% url 'redir' %}" method="post">
+        <div class="positioner">
+            <input name="pagenum" type="number" value="{{page}}" placeholder="Wpisz nową stronę">
+            <input type="text" value="" placeholder="Filtruj produkty po nazwie" name="filtry"><br>
+            <div class="footer">
+                <input class="button2" type="submit" value="Powrót" name="kierunek">
+                <input class="button2" style="background-color: #4a90e2;
+    color: #ffffff;" type="submit" value="Filtruj pozycje" name="kierunek">
+                <input class="button2" type="submit" value="Wybierz strone" name="kierunek">
+            </div>
+        </div>
+
+        <input type="hidden" name="pager" value="3">
+        <input type="hidden" name="redir_flag" value="True">
+    </form>
+    <div class="mid" id="styl1" style>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                let container = document.querySelector(".mid");
+                for (let i = 1; i <= 30; i++) {
+                    let button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "bttns";
+                    button.id = `ID${i}`;
+                    button.value = (i * 3) % 100;
+                    button.setAttribute("onclick", "add(this)");
+                    button.style.borderBottom = ["red", "green"][i % 2] + " solid 0.2vmin";
+                    
+                    let hiddenInput = document.createElement("input");
+                    hiddenInput.type = "hidden";
+                    hiddenInput.id = `ID${i}i`;
+                    hiddenInput.name = `PROD${i}`;
+                    hiddenInput.value = "";
+                    
+                    let wrapper = document.createElement("div");
+                    wrapper.className = "button-content";
+                    wrapper.style.display = "grid";
+                    wrapper.style.gridTemplateColumns = "1fr 1fr 1fr 1fr";
+                    wrapper.style.alignItems = "center";
+                    wrapper.style.gap = "10px";
+                    
+                    let img = document.createElement("img");
+                    img.src = "image.png";
+                    img.alt = "Product Image";
+                    img.style.width = "80px";
+                    img.style.height = "80px";
+                    
+                    let idSpan = document.createElement("span");
+                    idSpan.textContent = `ID${i}`;
+                    idSpan.id = `ID${i}p`
+                    
+                    let prodSpan = document.createElement("span");
+                    prodSpan.textContent = `PROD${i}`;
+                    prodSpan.id =`ID${i}p2`
+                    
+                    let statusSpan = document.createElement("span");
+                    statusSpan.textContent = ["Dostępny", "Niedostępny"][i % 2];
+                    statusSpan.id = `ID${i}p3`
+                    
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(idSpan);
+                    wrapper.appendChild(prodSpan);
+                    wrapper.appendChild(statusSpan);
+                    
+                    button.appendChild(hiddenInput);
+                    button.appendChild(wrapper);
+                    container.appendChild(button);
+                }
+            });
+        </script>
+    </div>
+    
+        <div id="fix" style="display: none;">
+            <p id="copy"></p>
+            <input type="number" id="licz" value="0" required>
+            <input class="inp4" type="button" value="Dodaj pozycje" name="kierunek" onclick="add2()">
+            <input class="inp4" type="button" value="Anuluj" name="kierunek" onclick="cl()">
+    
+        </div>
+    <div class="banner">Dodaj pozycje</div>
+    <script>
+        var elfix = document.getElementById("fix");
+        var actel;
+        var val;
+
+        function add(th) {
+            actel = th;
+            val = actel.querySelector('input');
+            elfix.style.display = "flex";
+        }
+
+        function getSessionData() {
+            return JSON.parse(sessionStorage.getItem("moje3Dane") || "{}");
+        }
+
+        function addSessionData(key, value) {
+            let lista = getSessionData();
+            
+            if (key in lista) {
+                value[1] = (parseInt(lista[key][1]) + parseInt(value[1])).toString();
+                lista[key] = value;
+            } else {
+                lista[key] = value;
+            }
+
+            sessionStorage.setItem("moje3Dane", JSON.stringify(lista));
+        }
+
+        var lista;
+        var lis = [];
+
+        function add2() {
+            lista = getSessionData();
+            var liczz = document.getElementById("licz").value;
+            var lis = [];
+
+            if (parseInt(liczz) > 0) {
+                lis[0] = actel.id;
+                lis[1] = liczz;
+                lis[2] = document.getElementById(actel.id + "i").name;
+                lis[3] = document.getElementById(actel.id + "p").textContent;
+                lis[4] = val.value;
+                lis[5] = document.getElementById(actel.id + "p2").textContent;
+                lis[6] = document.getElementById(actel.id + "p3").textContent;
+
+                addSessionData(actel.id, lis);
+                console.log("added");
+                
+                actel = null;
+                val = null;
+            }
+
+            elfix.style.display = "none";
+        }
+
+        function cl() {
+            actel = null;
+            val = null;
+            elfix.style.display = "none";
+        }
+        var positioner = document.querySelector('.positioner').offsetHeight;
+        document.querySelector('.mid').style.maxHeight = "calc("(window.innerHeight - 40 - positioner) + "px - 9vmin)";
+
+    </script>
+</body>
+</html>
