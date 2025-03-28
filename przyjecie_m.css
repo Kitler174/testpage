@@ -176,11 +176,17 @@ p{
 .bttns{
     user-select: none;
     width:100%;
-    transition: all 0.2s;
     cursor: pointer;
-    font-size: 2rem
+    font-size: 2rem;
+    border: none;
+    border-left: 0.2vmin solid black;
+    border-right: 0.2vmin solid black;
 }
 
+span{
+    height: 100%;
+    border-left: solid 0.1vmin black;
+}
 
 /* Modal */
 #fix, #fix2, #fix3 {
@@ -201,7 +207,21 @@ p{
 }
 
 .button-content{
-    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; align-items: center; gap: 10px;
+    display: grid; 
+    grid-template-columns: 120px 1fr 1fr 1fr; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px;
+
+}
+
+span, img{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* For Extra Small Mobile Screens (Landscape) */
@@ -261,9 +281,13 @@ p{
         flex-direction: column;
     }
     .bttns {
-        border-bottom: 0.2vmin solid;
-        word-wrap: break-word;
-        white-space: normal;
-        overflow-wrap: break-word;
+        border-bottom: #000000 0.1vmin solid;
+    }
+    span{
+        border: none;
+    }
+    img{
+        width: 100px;
+        height: 100px;
     }
 }

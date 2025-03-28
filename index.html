@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="przyjecie_m.css">
     <link rel="icon" href="icon.png">
-
     <title>Workplace</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -30,13 +29,9 @@
 
         .close-btn {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 30px;
-            color: white;
+            font-size: 0;
             cursor: pointer;
         }
-    </style>
     </style>
 </head>
 <body>
@@ -46,8 +41,7 @@
             <input type="text" value="" placeholder="Filtruj produkty po nazwie" name="filtry"><br>
             <div class="footer">
                 <input class="button2" type="submit" value="Powrót" name="kierunek">
-                <input class="button2" style="background-color: #4a90e2;
-    color: #ffffff;" type="submit" value="Filtruj pozycje" name="kierunek">
+                <input class="button2" style="background-color: #4a90e2; color: #ffffff;" type="submit" value="Filtruj pozycje" name="kierunek">
                 <input class="button2" type="submit" value="Wybierz strone" name="kierunek">
             </div>
         </div>
@@ -55,7 +49,8 @@
         <input type="hidden" name="pager" value="3">
         <input type="hidden" name="redir_flag" value="True">
     </form>
-    <div class="mid" id="styl1" style>
+
+    <div class="mid" id="styl1">
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 let container = document.querySelector(".mid");
@@ -66,65 +61,95 @@
                     button.id = `ID${i}`;
                     button.value = (i * 3) % 100;
                     button.setAttribute("onclick", "add(this)");
-                    button.style.borderBottom = ["red", "green"][i % 2] + " solid 0.2vmin";
-                    
+
                     let hiddenInput = document.createElement("input");
                     hiddenInput.type = "hidden";
                     hiddenInput.id = `ID${i}i`;
                     hiddenInput.name = `PROD${i}`;
                     hiddenInput.value = "";
-                    
+
                     let wrapper = document.createElement("div");
                     wrapper.className = "button-content";
-                    
+
                     let img = document.createElement("img");
                     img.src = "image.png";
                     img.alt = "Product Image";
-                    img.style.width = "80px";
-                    img.style.height = "80px";
-                    
+                    img.style.width = "120px";
+                    img.style.height = "120px";
+                    img.setAttribute("onclick", "openImage(this)");
+
                     let idSpan = document.createElement("span");
                     idSpan.textContent = `ID${i}`;
                     idSpan.id = `ID${i}p`
-                    
+
                     let prodSpan = document.createElement("span");
                     prodSpan.textContent = `PROD${i}`;
-                    prodSpan.id =`ID${i}p2`
-                    
+                    prodSpan.id = `ID${i}p2`
+
                     let statusSpan = document.createElement("span");
                     statusSpan.textContent = ["Dostępny", "Niedostępny"][i % 2];
                     statusSpan.id = `ID${i}p3`
-                    
+
                     wrapper.appendChild(img);
                     wrapper.appendChild(idSpan);
                     wrapper.appendChild(prodSpan);
                     wrapper.appendChild(statusSpan);
-                    
+
                     button.appendChild(hiddenInput);
                     button.appendChild(wrapper);
                     container.appendChild(button);
                 }
             });
+            var isopen = false;
+            function openImage(imgElement) {
+                let overlay = document.createElement('div');
+                overlay.className = 'overlay';
+                let img = document.createElement('img');
+                img.src = imgElement.src;
+                overlay.appendChild(img);
+
+                // Close button for overlay
+                let closeBtn = document.createElement('span');
+                closeBtn.className = 'close-btn';
+                closeBtn.innerHTML = '&times;';
+                closeBtn.onclick = function() {
+                    closeImage(overlay);
+                };
+                overlay.appendChild(closeBtn);
+
+                document.body.appendChild(overlay);
+                overlay.style.display = 'flex';
+                isopen = true
+            }
+
+            // Close the overlay (image)
+            function closeImage(overlay) {
+                overlay.style.display = 'none';
+                document.body.removeChild(overlay);
+                isopen = false
+            }
         </script>
     </div>
-    
-        <div id="fix" style="display: none;">
-            <p id="copy"></p>
-            <input type="number" id="licz" value="0" required>
-            <input class="inp4" type="button" value="Dodaj pozycje" name="kierunek" onclick="add2()">
-            <input class="inp4" type="button" value="Anuluj" name="kierunek" onclick="cl()">
-    
-        </div>
+
+    <div id="fix" style="display: none;">
+        <p id="copy"></p>
+        <input type="number" id="licz" value="0" required>
+        <input class="inp4" type="button" value="Dodaj pozycje" name="kierunek" onclick="add2()">
+        <input class="inp4" type="button" value="Anuluj" name="kierunek" onclick="cl()">
+    </div>
     <div class="banner">Dodaj pozycje</div>
+
     <script>
         var elfix = document.getElementById("fix");
         var actel;
         var val;
 
         function add(th) {
+            if (!isopen){
             actel = th;
             val = actel.querySelector('input');
             elfix.style.display = "flex";
+            }
         }
 
         function getSessionData() {
@@ -133,25 +158,19 @@
 
         function addSessionData(key, value) {
             let lista = getSessionData();
-            
             if (key in lista) {
                 value[1] = (parseInt(lista[key][1]) + parseInt(value[1])).toString();
                 lista[key] = value;
             } else {
                 lista[key] = value;
             }
-
             sessionStorage.setItem("moje3Dane", JSON.stringify(lista));
         }
-
-        var lista;
-        var lis = [];
 
         function add2() {
             lista = getSessionData();
             var liczz = document.getElementById("licz").value;
             var lis = [];
-
             if (parseInt(liczz) > 0) {
                 lis[0] = actel.id;
                 lis[1] = liczz;
@@ -163,11 +182,9 @@
 
                 addSessionData(actel.id, lis);
                 console.log("added");
-                
                 actel = null;
                 val = null;
             }
-
             elfix.style.display = "none";
         }
 
@@ -176,9 +193,6 @@
             val = null;
             elfix.style.display = "none";
         }
-        var positioner = document.querySelector('.positioner').offsetHeight;
-        document.querySelector('.mid').style.maxHeight = "calc("(window.innerHeight - 40 - positioner) + "px - 9vmin)";
-
     </script>
 </body>
 </html>
